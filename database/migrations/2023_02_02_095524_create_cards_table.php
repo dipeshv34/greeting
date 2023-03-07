@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('center_image');
             $table->string('bottom_image');
             $table->text('content');
+            $table->string('content_color');
+            $table->longText('bottom_contents');
+            $table->longText('seo_content');
             $table->enum('status',['active','inactive']);
             $table->timestamps();
         });

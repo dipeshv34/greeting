@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Card;
 use App\Models\Category;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Http\Request;
@@ -39,6 +40,7 @@ class CategoryController extends Controller
    }
 
    public function delete($id){
+        Card::where('category_id',$id)->delete();
         Category::where('id',$id)->delete();
        return redirect(route('category.index'));
    }

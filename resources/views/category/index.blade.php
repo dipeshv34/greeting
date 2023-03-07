@@ -4,7 +4,7 @@
         <div class="card-header">
             <div class="d-flex justify-content-between">
                 <h3>Categories</h3>
-                <a href="{{route('category.create')}}"><button class="btn btn-lg btn-primary">Create</button></a>
+                <a href="{{route('category.create')}}"><button class="btn btn-md btn-primary">Create</button></a>
             </div>
         </div>
         <div class="card-body">

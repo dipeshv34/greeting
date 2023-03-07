@@ -41,6 +41,9 @@ class CardController extends Controller
             'back_image'=>$backName,
             'bottom_image'=>$bottomName,
             'content'=>$request->content,
+            'content_color'=>$request->content_color,
+            'bottom_contents'=>$request->bottom_contents,
+            'seo_content'=>$request->seo_content,
             'status'=>$request->status
         ]);
 
@@ -53,34 +56,59 @@ class CardController extends Controller
         return view('card.form',compact('card','categories'));
     }
     public function update(CardRequest $request,$id){
-        $card=Card::where('id',$id)->first();
-        @unlink(public_path('storage/centerImages/'.$card->center_image));
-        @unlink(public_path('storage/backgroundImages/'.$card->back_image));
-        @unlink(public_path('storage/bottomImages/'.$card->bottom_image));
+        try{
+            $card=Card::where('id',$id)->first();
+            if(!empty($request->file('center_image'))) {
+                \Illuminate\Support\Facades\Storage::delete('centerImages/'.$card->center_image);
+                $centerName = Carbon::now()->timestamp.'.'.$request->file('cover_image')->getClientOriginalExtension();
+                $request->file('center_image')->storeAs('centerImages',$centerName);
+            }else{
+                $centerName=$card->center_image;
+            }
 
-        $centerName = Carbon::now()->timestamp.'.'.$request->file('center_image')->getClientOriginalExtension();
-        $request->file('center_image')->storeAs('centerImages',$centerName);
+            if(!empty($request->file('cover_image'))) {
+                \Illuminate\Support\Facades\Storage::delete('coverImages/'.$card->cover_image);
+                $coverName = Carbon::now()->timestamp.'.'.$request->file('cover_image')->getClientOriginalExtension();
+                $request->file('cover_image')->storeAs('coverImages',$coverName);
+            }else{
+                $coverName =$card->cover_image;
+            }
 
-        $coverName = Carbon::now()->timestamp.'.'.$request->file('cover_image')->getClientOriginalExtension();
-        $request->file('cover_image')->storeAs('coverImages',$centerName);
 
-        $backName = Carbon::now()->timestamp.'.'.$request->file('center_image')->getClientOriginalExtension();
-        $request->file('back_image')->storeAs('backgroundsImages',$backName);
+            if(!empty($request->file('back_image'))) {
+                \Illuminate\Support\Facades\Storage::delete('backgroundsImages/'.$card->back_image);
+                $backName = Carbon::now()->timestamp.'.'.$request->file('back_image')->getClientOriginalExtension();
+                $request->file('back_image')->storeAs('backgroundsImages',$backName);
+            }else{
+                $backName =$card->back_image;
+            }
 
-        $bottomName = Carbon::now()->timestamp.'.'.$request->file('center_image')->getClientOriginalExtension();
-        $request->file('bottom_image')->storeAs('bottomImages',$bottomName);
+            if(!empty($request->file('bottom_image'))) {
+                \Illuminate\Support\Facades\Storage::delete('bottomImages/'.$card->bottom_image);
+                $bottomName = Carbon::now()->timestamp.'.'.$request->file('bottom_image')->getClientOriginalExtension();
+                $request->file('bottom_image')->storeAs('bottomImages',$bottomName);
+            }else{
+                $bottomName =$card->bottom_image;
+            }
 
-        Card::where('id',$id)->update([
-            'title'=>$request->title,
-            'category_id'=>$request->category,
-            'center_image'=>$centerName,
-            'cover_image'=>$coverName,
-            'bottom_image'=>$bottomName,
-            'back_image'=>$backName,
-            'content'=>$request->content,
-            'status'=>$request->status
-        ]);
-        return redirect(route('cards.index'));
+
+            Card::where('id',$id)->update([
+                'title'=>$request->title,
+                'category_id'=>$request->category,
+                'center_image'=>$centerName,
+                'cover_image'=>$coverName,
+                'bottom_image'=>$bottomName,
+                'back_image'=>$backName,
+                'content'=>$request->content,
+                'content_color'=>$request->content_color,
+                'bottom_contents'=>$request->bottom_contents,
+                'seo_content'=>$request->seo_content,
+                'status'=>$request->status
+            ]);
+            return redirect(route('cards.index'));
+        }catch (\Exception $e){
+            dd($e);
+        }
     }
 
     public function delete($id){

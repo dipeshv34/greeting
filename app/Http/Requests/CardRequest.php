@@ -26,10 +26,10 @@ class CardRequest extends FormRequest
         return [
             'title'=>'required',
             'category'=>'required',
-            'cover_image'=>'required',
-            'center_image'=>'required',
-            'bottom_image'=>'required',
-            'back_image'=>'required',
+//            'cover_image'=>'required',
+//            'center_image'=>'required',
+//            'bottom_image'=>'required',
+//            'back_image'=>'required',
             'content'=>'required',
             'status'=>'required',
         ];
