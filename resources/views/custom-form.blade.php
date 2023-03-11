@@ -25,6 +25,21 @@
                             </div>
 
                             <div class="row mb-3">
+                                <label for="favicon" class="col-md-4 col-form-label text-md-end">{{ __('Favicon') }}</label>
+                                <div class="col-md-5">
+                                    <input id="favicon" type="file" class="form-control" name="favicon">
+                                </div>
+                                <div class="col-md-3">
+                                    <img src="{{asset('storage/favicon/'.!empty($customization) && isset($customization->favicon)? 'storage/favicon/'.$customization->favicon : '')}}" height="60px" width="60px">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="header-title" class="col-md-4 col-form-label text-md-end">{{ __('Title') }}</label>
+                                <div class="col-md-6">
+                                    <input id="header-title" type="text" class="form-control" name="title" value="{{!empty($customization) && isset($customization->title)? $customization->title : ''}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
                                 <label for="header-text" class="col-md-4 col-form-label text-md-end">{{ __('Header Text') }}</label>
 
                                 <div class="col-md-6">

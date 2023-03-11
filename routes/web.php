@@ -64,8 +64,22 @@ Route::post('customizations-save',function (\Illuminate\Http\Request $request){
         else{
             $centerName=$data->logo;
         }
+
+        if(!empty($request->file('favicon'))){
+            //            @unlink(public_path('public/logo/'.$data->logo));
+            \Illuminate\Support\Facades\Storage::delete('favicon/'.$data->favicon);
+            $favicon = Carbon::now()->timestamp.'.'.$request->file('favicon')->getClientOriginalExtension();
+            $request->file('favicon')->storeAs('favicon',$favicon);
+        }
+        else{
+            $favicon=$data->favicon;
+        }
+            
+
         \App\Models\Customization::where('id',$data->id)->update([
             'logo'=>$centerName,
+            'favicon'=>$favicon,
+            'title'=>$request->title,
             'header_script'=>$request->header_script,
             'header_text'=>$request->header_text,
             'desktop_sidebar_script'=>$request->desktop_sidebar_script,
@@ -76,10 +90,20 @@ Route::post('customizations-save',function (\Illuminate\Http\Request $request){
         ]);
     }
     else{
-        $centerName = Carbon::now()->timestamp.'.'.$request->file('logo')->getClientOriginalExtension();
-        $request->file('logo')->storeAs('logo',$centerName);
+        if($request->hasFile('logo')){
+            $centerName = Carbon::now()->timestamp.'.'.$request->file('logo')->getClientOriginalExtension();
+            $request->file('logo')->storeAs('logo',$centerName);
+        }
+
+        if($request->hasFile('favicon')){
+            $favicon = Carbon::now()->timestamp.'.'.$request->file('favicon')->getClientOriginalExtension();
+            $request->file('favicon')->storeAs('favicon',$favicon);
+        }
+
         \App\Models\Customization::create([
-            'logo'=>$centerName,
+            'logo'=>$centerName ?? NULL,
+            'favicon'=>$favicon ?? NULL,
+            'title'=>$request->title,
             'header_text'=>$request->header_text,
             'header_script'=>$request->header_script,
             'desktop_sidebar_script'=>$request->desktop_sidebar_script,

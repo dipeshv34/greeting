@@ -66,6 +66,12 @@
                             <label class="col-form-label">Bottom Image</label>
                             <input type="file" name="bottom_image" class="form-control" value=" {{isset($card) ? $card->bottom_image : '' }}">
                         </div>
+
+                        <div>
+                            <label  class="col-form-label">{{ __('Bottom Contents') }}</label>
+                                <textarea type="text" rows="3" name="bottom_contents" class="form-control summernote">{{!empty($card) && isset($card->bottom_contents) ? $card->bottom_contents : ''}}</textarea>
+                        </div>
+
                         <div>
                             <label class="col-form-label">Content</label>
                             <textarea name="content" class="form-control"  rows="3">{{isset($card) ? $card->content : ''}}</textarea>
@@ -80,11 +86,6 @@
                                 <option value="active" {{isset($card) && $card->status=='active' ? 'selected' :''}}>Active</option>
                                 <option value="inactive" {{isset($card) && $card->status=='inactive' ? 'selected' :''}}>Inactive</option>
                             </select>
-                        </div>
-
-                        <div class="">
-                            <label  class="col-form-label">{{ __('Bottom Contents') }}</label>
-                                <textarea type="text" rows="3" name="bottom_contents" class="form-control summernote">{{!empty($card) && isset($card->bottom_contents) ? $card->bottom_contents : ''}}</textarea>
                         </div>
 
                         <div class="">

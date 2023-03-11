@@ -7,8 +7,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Greetings') }}</title>
-
+    <title>{{ App\Models\Customization::get()->first()->title ?? 'Greetings' }}</title>
+    <link rel="icon" type="image/x-icon" href="{{asset('storage/favicon/'.App\Models\Customization::get()->first()->favicon) }}">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
