@@ -21,30 +21,44 @@ class CardController extends Controller
     }
 
     public function store(CardRequest $request){
-        $centerName = Carbon::now()->timestamp.'.'.$request->file('center_image')->getClientOriginalExtension();
-        $request->file('center_image')->storeAs('centerImages',$centerName);
+        $centerName=null;
+        $coverName=null;
+        $backName=null;
+        $bottomName=null;
 
-        $coverName = Carbon::now()->timestamp.'.'.$request->file('cover_image')->getClientOriginalExtension();
-        $request->file('cover_image')->storeAs('coverImages',$coverName);
+        if(!empty($request->file('center_image'))){
+            $centerName = Carbon::now()->timestamp.'.'.$request->file('center_image')->getClientOriginalExtension();
+            $request->file('center_image')->storeAs('centerImages',$centerName);
+        }
 
-        $backName = Carbon::now()->timestamp.'.'.$request->file('center_image')->getClientOriginalExtension();
-        $request->file('back_image')->storeAs('backgroundsImages',$backName);
+        if(!empty($request->file('cover_image'))) {
+            $coverName = Carbon::now()->timestamp . '.' . $request->file('cover_image')->getClientOriginalExtension();
+            $request->file('cover_image')->storeAs('coverImages', $coverName);
+        }
 
-        $bottomName = Carbon::now()->timestamp.'.'.$request->file('center_image')->getClientOriginalExtension();
-        $request->file('bottom_image')->storeAs('bottomImages',$bottomName);
+        if(!empty($request->file('back_image'))) {
+            $backName = Carbon::now()->timestamp . '.' . $request->file('back_image')->getClientOriginalExtension();
+            $request->file('back_image')->storeAs('backgroundsImages', $backName);
+        }
+
+        if(!empty($request->file('bottom_image'))) {
+            $bottomName = Carbon::now()->timestamp . '.' . $request->file('bottom_image')->getClientOriginalExtension();
+            $request->file('bottom_image')->storeAs('bottomImages', $bottomName);
+        }
 
         Card::create([
-            'title'=>$request->title,
-            'category_id'=>$request->category,
-            'center_image'=>$centerName,
-            'cover_image'=>$coverName,
-            'back_image'=>$backName,
-            'bottom_image'=>$bottomName,
-            'content'=>$request->content,
-            'content_color'=>$request->content_color,
-            'bottom_contents'=>$request->bottom_contents,
-            'seo_content'=>$request->seo_content,
-            'status'=>$request->status
+            'title'=>isset($request->title) ? $request->title : null,
+            'category_id'=>isset($request->category) ? $request->category : null,
+            'center_image'=>!empty($centerName) ? $centerName :null,
+            'cover_image'=>!empty($coverName) ? $coverName :null,
+            'back_image'=>!empty($backName) ? $backName : null,
+            'bottom_image'=>!empty($bottomName) ? $bottomName : null,
+            'content'=>isset($request->content) ? $request->content :null,
+            'content_color'=>isset($request->content_color) ? $request->content_color :null,
+            'wishing_title'=>isset($request->wishing_title) ? $request->wishing_title :null,
+            'bottom_contents'=>isset($request->bottom_contents) ? $request->bottom_contents :null,
+            'seo_content'=>isset($request->seo_content) ? $request->seo_content : null,
+            'status'=>isset($request->status) ? $request->status : null
         ]);
 
         return redirect(route('cards.index'));
@@ -60,7 +74,7 @@ class CardController extends Controller
             $card=Card::where('id',$id)->first();
             if(!empty($request->file('center_image'))) {
                 \Illuminate\Support\Facades\Storage::delete('centerImages/'.$card->center_image);
-                $centerName = Carbon::now()->timestamp.'.'.$request->file('cover_image')->getClientOriginalExtension();
+                $centerName = Carbon::now()->timestamp.'.'.$request->file('center_image')->getClientOriginalExtension();
                 $request->file('center_image')->storeAs('centerImages',$centerName);
             }else{
                 $centerName=$card->center_image;
@@ -93,17 +107,18 @@ class CardController extends Controller
 
 
             Card::where('id',$id)->update([
-                'title'=>$request->title,
-                'category_id'=>$request->category,
+                'title'=>isset($request->title) ? $request->title : null,
+                'category_id'=>isset($request->category) ? $request->category :null,
                 'center_image'=>$centerName,
                 'cover_image'=>$coverName,
                 'bottom_image'=>$bottomName,
                 'back_image'=>$backName,
-                'content'=>$request->content,
-                'content_color'=>$request->content_color,
-                'bottom_contents'=>$request->bottom_contents,
-                'seo_content'=>$request->seo_content,
-                'status'=>$request->status
+                'content'=>isset($request->content) ? $request->content : null,
+                'content_color'=>isset($request->content_color) ? $request->content_color : null,
+                'wishing_title'=>isset($request->wishing_title) ? $request->wishing_title : null,
+                'bottom_contents'=>isset($request->bottom_contents) ? $request->bottom_contents : null,
+                'seo_content'=>isset($request->seo_content) ? $request->seo_content : null,
+                'status'=>isset($request->status) ? $request->status : null
             ]);
             return redirect(route('cards.index'));
         }catch (\Exception $e){

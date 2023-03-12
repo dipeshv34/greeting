@@ -37,13 +37,13 @@
                        <div style="display: flex" class="mt-4">
                            <label class="">Wishing Title &nbsp;&nbsp;</label>
                            <div class="form-check">
-                               <input class="form-check-input" type="radio" value="wish_you" id="wish_title" name="wishing_title">
+                               <input class="form-check-input" type="radio" value="wish_you" id="wish_title" name="wishing_title"  {{isset($card) && $card->wishing_title=='wish_you' ? 'checked' : ''}}>
                                <label class="form-check-label" for="wish_title">
                                    Wish You
                                </label>
                            </div>
                            <div class="form-check" style="margin-left: 10px">
-                               <input class="form-check-input" type="radio" value="wishing_you" id="wishing_you" name="wishing_title">
+                               <input class="form-check-input" type="radio" value="wishing_you" id="wishing_you" name="wishing_title" {{isset($card) && $card->wishing_title=='wishing_you' ? 'checked' : ''}}>
                                <label class="form-check-label" for="wishing_you">
                                    Wishing You
                                </label>

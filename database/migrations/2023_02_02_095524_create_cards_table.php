@@ -15,17 +15,18 @@ return new class extends Migration
     {
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('category_id');
-            $table->string('cover_image');
-            $table->string('back_image');
-            $table->string('center_image');
-            $table->string('bottom_image');
-            $table->text('content');
-            $table->string('content_color');
-            $table->longText('bottom_contents');
-            $table->longText('seo_content');
-            $table->enum('status',['active','inactive']);
+            $table->string('title')->nullable();
+            $table->string('category_id')->nullable();
+            $table->string('cover_image')->nullable();
+            $table->string('back_image')->nullable();
+            $table->string('center_image')->nullable();
+            $table->string('bottom_image')->nullable();
+            $table->text('content')->nullable();
+            $table->string('content_color')->nullable();
+            $table->longText('bottom_contents')->nullable();
+            $table->longText('seo_content')->nullable();
+            $table->longText('wishing_title')->nullable();
+            $table->enum('status',['active','inactive'])->nullable();
             $table->timestamps();
         });
     }

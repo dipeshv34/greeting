@@ -24,14 +24,7 @@ class CardRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required',
-            'category'=>'required',
-//            'cover_image'=>'required',
-//            'center_image'=>'required',
-//            'bottom_image'=>'required',
-//            'back_image'=>'required',
-            'content'=>'required',
-            'status'=>'required',
+
         ];
     }
 }

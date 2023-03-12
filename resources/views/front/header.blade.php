@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ App\Models\Customization::get()->first()->title ?? 'Greetings' }}</title>
-    <link rel="icon" type="image/x-icon" href="{{asset('storage/favicon/'.App\Models\Customization::get()->first()->favicon) }}">
+    <link rel="icon" type="image/x-icon" href="{{ !empty(App\Models\Customization::get()->first()->favicon) ? asset('storage/favicon/'.App\Models\Customization::get()->first()->favicon) : '' }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link href="{{asset('css/style2.css')}}" rel="stylesheet">
 
@@ -18,10 +18,10 @@
     <nav class="navbar navbar-dark bg-transparent p-3">
         <div class="brand-parent">
             <a class="navbar-brand" href="{{route('front.view')}}">
-                <img src="{{asset('storage/logo/'.$customization->logo)}}" width="50" height="50" class="d-inline-block align-top" alt="">
+                <img src="{{!empty($customization->logo) ? asset('storage/logo/'.$customization->logo) : ''}}" width="50" height="50" class="d-inline-block align-top" alt="">
             </a>
             <div>
-                <h3>{{$customization->header_text}}</h3>
+                <h3>{{!empty($customization->header_text) ? $customization->header_text : ''}}</h3>
             </div>
         </div>
         <a href="#" class="hamburger-menu" data-drawer-trigger="" aria-controls="drawer-name" aria-expanded="false">
@@ -56,7 +56,7 @@
             </ul>
         </div>
     </div>
-    @if($customization->desktop_content_script)
+    @if(!empty($customization->desktop_content_script))
         {!! html_entity_decode($customization->mobile_content_script) !!}
     @endif
 </div>

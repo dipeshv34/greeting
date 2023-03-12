@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('customizations', function (Blueprint $table) {
             $table->id();
-            $table->string('logo');
-            $table->string('header_text');
-            $table->longText('header_script');
-            $table->longText('desktop_sidebar_script');
-            $table->longText('mobile_sidebar_script');
-            $table->longText('before_content_script');
-            $table->longText('after_content_script');
-            $table->longText('footer_text');
+            $table->string('logo')->nullable();
+            $table->string('header_text')->nullable();
+            $table->longText('header_script')->nullable();
+            $table->longText('desktop_sidebar_script')->nullable();
+            $table->longText('mobile_sidebar_script')->nullable();
+            $table->longText('before_content_script')->nullable();
+            $table->longText('after_content_script')->nullable();
+            $table->longText('footer_text')->nullable();
             $table->timestamps();
         });
     }

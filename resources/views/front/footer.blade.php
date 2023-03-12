@@ -3,7 +3,11 @@
         {!! html_entity_decode($customization->after_content_script) !!}
     </div>
 @endif
-<footer>
+
+<div style="margin-top: 100px">
+
+</div>
+<footer style="position: fixed; bottom: 0; left: 0; width: 100%;">
     <div class="row">
         <p>{!! !empty($customization->footer_text) ? $customization->footer_text : '' !!}</p>
     </div>

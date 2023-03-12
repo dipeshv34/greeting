@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ App\Models\Customization::get()->first()->title ?? 'Greetings' }}</title>
-    <link rel="icon" type="image/x-icon" href="{{asset('storage/favicon/'.App\Models\Customization::get()->first()->favicon) }}">
+    <link rel="icon" type="image/x-icon" href="{{ !empty(App\Models\Customization::get()->first()->favicon) ? asset('storage/favicon/'.App\Models\Customization::get()->first()->favicon) : '' }}">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
